@@ -1,0 +1,92 @@
+.form-logo-bar {
+  background-color: #800020;
+  padding: 16px;
+  text-align: center;
+}
+
+.form-logo {
+  color: white;
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  font-family: Georgia, serif;
+}
+
+.form-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.form-titulo {
+  font-size: 28px;
+  font-style: italic;
+  font-family: Georgia, serif;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.form-card {
+  width: 400px;
+  border: 1.5px solid #6ab0d4;
+  border-radius: 4px;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #fff;
+}
+
+.form-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-grupo label {
+  font-size: 14px;
+  font-family: Georgia, serif;
+  color: #333;
+}
+
+.form-grupo input {
+  padding: 8px 10px;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: Georgia, serif;
+  outline: none;
+}
+
+.form-grupo input:focus {
+  border-color: #800020;
+}
+
+.form-btn {
+  width: 70%;
+  margin: 10px auto 0;
+  padding: 14px;
+  background-color: #800020;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-style: italic;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  display: block;
+}
+
+.form-btn:hover {
+  background-color: #600018;
+}
+
+.form-link {
+  margin-top: 16px;
+  font-size: 13px;
+  font-family: Georgia, serif;
+  color: #800020;
+  cursor: pointer;
+  text-decoration: underline;
+}

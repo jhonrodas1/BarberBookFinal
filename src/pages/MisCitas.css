@@ -1,0 +1,92 @@
+.misCitas-container {
+  padding: 20px;
+  font-family: Georgia, serif;
+  background: #f4f4f4;
+  min-height: 100vh;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.cita-card {
+  border: 2px solid #c9a1a1;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cita-info p {
+  margin: 3px 0;
+}
+
+.cita-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-modificar,
+.btn-cancelar {
+  background: #800020;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.btn-cancelar {
+  background: #a00020;
+}
+
+.btn-agendar {
+  display: block;
+  margin: 40px auto;
+  padding: 15px 30px;
+  background: #800020;
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.sin-citas {
+  text-align: center;
+  font-family: Georgia, serif;
+  color: #666;
+  margin-top: 40px;
+  font-style: italic;
+}
+
+.editar-panel {
+  background: #fff8f8;
+  border: 1.5px solid #800020;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: Georgia, serif;
+}
+
+.editar-panel label {
+  font-size: 13px;
+  color: #333;
+  font-weight: bold;
+}
+
+.editar-panel select,
+.editar-panel input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+}

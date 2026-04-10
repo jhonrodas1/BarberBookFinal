@@ -1,0 +1,162 @@
+.citas-layout {
+  display: flex;
+  min-height: 100vh;
+  background: white;
+  font-family: Georgia, serif;
+}
+
+/* IZQUIERDA */
+.citas-izq {
+  width: 260px;
+  background: white;
+  padding: 40px 24px;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.citas-logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #800020;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.citas-btn-volver {
+  background: white;
+  color: #800020;
+  border: 2px solid #800020;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.citas-btn-volver:hover {
+  background: #800020;
+  color: white;
+}
+
+/* DERECHA */
+.citas-der {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+  background: #f9f5f5;
+}
+
+.citas-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.citas-titulo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.citas-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.citas-form input,
+.citas-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.citas-btn-reservar {
+  margin-top: 15px;
+  padding: 12px;
+  background: #800020;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.citas-btn-reservar:hover {
+  background: #5a0016;
+}
+
+/* CONFIRMACIÓN */
+.citas-confirmacion {
+  text-align: center;
+}
+
+.citas-check {
+  font-size: 40px;
+  color: green;
+}
+
+/* CALENDARIO DE HORAS */
+.citas-horario {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fafafa;
+}
+
+.citas-grid-horas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.hora-slot {
+  padding: 10px 6px;
+  border-radius: 6px;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  position: relative;
+}
+
+.hora-libre {
+  background: #e8f5e9;
+  border: 1.5px solid #4caf50;
+  color: #2e7d32;
+}
+
+.hora-libre:hover {
+  background: #c8e6c9;
+  transform: scale(1.04);
+}
+
+.hora-ocupada {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.hora-seleccionada {
+  background: #800020 !important;
+  border-color: #800020 !important;
+  color: white !important;
+  font-weight: bold;
+  transform: scale(1.06);
+}
+
+.hora-tag {
+  font-size: 9px;
+  color: #bbb;
+  font-style: italic;
+  font-family: Georgia, serif;
+}

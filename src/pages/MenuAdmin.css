@@ -1,0 +1,56 @@
+.calendar-card-modern {
+  background: #f3f0f7; /* Color lavanda muy claro */
+  border-radius: 28px;
+  padding: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.calendar-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.day-number {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.day-number.active {
+  background: #6750a4; /* Púrpura de la imagen */
+  color: white;
+}
+
+.day-number.has-event {
+  border: 1.5px solid #6750a4;
+  color: #6750a4;
+  font-weight: bold;
+}
+
+.admin-select-modern {
+  border: 1px solid #6750a4;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background: white;
+  font-family: 'Georgia', serif;
+}
+
+.cita-tag {
+  background: white;
+  padding: 8px 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  border-left: 4px solid #6750a4;
+  font-size: 13px;
+}

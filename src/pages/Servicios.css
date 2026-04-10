@@ -1,0 +1,81 @@
+.sv-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 30px;
+  gap: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.sv-flecha {
+  font-size: 24px;
+  cursor: pointer;
+  color: #800020;
+  font-weight: bold;
+}
+
+.sv-logo {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-family: Georgia, serif;
+  color: #222;
+}
+
+.sv-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 60px;
+  gap: 16px;
+}
+
+.sv-titulo-box {
+  border: 1.5px solid #800020;
+  border-radius: 40px;
+  padding: 14px 40px;
+  background-color: #f5e6d3;
+  margin-bottom: 10px;
+}
+
+.sv-titulo {
+  font-size: 22px;
+  font-style: italic;
+  font-family: Georgia, serif;
+  color: #333;
+}
+
+.sv-lista {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sv-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  padding: 14px 24px;
+  gap: 14px;
+  background: #fff;
+}
+
+.sv-icono {
+  font-size: 20px;
+  color: #800020;
+}
+
+.sv-nombre {
+  flex: 1;
+  font-size: 15px;
+  font-family: Georgia, serif;
+  color: #222;
+}
+
+.sv-precio {
+  font-size: 15px;
+  font-family: Georgia, serif;
+  color: #222;
+}
