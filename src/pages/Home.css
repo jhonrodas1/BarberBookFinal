@@ -1,116 +1,121 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ================================================
+   BARBERBOOK — GLOBAL DESIGN SYSTEM
+   Negro #0a0a0a · Oro #c9a84c · Crema #f5f0e8
+   ================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Georgia', serif; background: #0a0a0a; color: #f5f0e8; min-height: 100vh; }
 
-body {
-  font-family: Georgia, serif;
-  background: #fff;
+/* ── BOTÓN VOLVER (óvalo dorado) ── */
+.bb-back {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px;
+  background: transparent !important;
+  border: 1.5px solid #c9a84c !important;
+  color: #c9a84c !important;
+  border-radius: 999px !important;
+  padding: 7px 16px 7px 10px !important;
+  font-family: 'Georgia', serif !important;
+  font-size: 13px !important;
+  letter-spacing: 0.3px;
+  cursor: pointer !important;
+  transition: background 0.2s, box-shadow 0.2s;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
-
-.home-container {
-  width: 100%;
-  min-height: 100vh;
-}
-
-.home-header {
-  background-color: #800020;
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.home-header-title {
-  color: white;
-  font-size: 13px;
-}
-
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background-color: white;
-}
-
-.home-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 60px 200px;
-  gap: 24px;
-}
-
-.home-logo {
-  font-size: 28px;
-  font-weight: bold;
-  letter-spacing: 4px;
-  color: #222;
-  margin-bottom: 10px;
-}
-
-.home-btn {
-  width: 100%;
-  padding: 16px;
-  background-color: #800020;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-style: italic;
-  font-family: Georgia, serif;
-  cursor: pointer;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.home-btn:hover {
-  background-color: #600018;
-}
-
-.menu-lateral {
-  display: flex;
-  align-items: center;
-  background-color: #2a2a2a;
-  padding: 30px 20px;
-  gap: 20px;
-}
-
-.menu-icono {
+.bb-back:hover { background: #c9a84c1a !important; box-shadow: 0 0 12px #c9a84c30; }
+.bb-back-icon {
+  width: 22px !important; height: 22px !important;
+  border: 1.5px solid #c9a84c !important;
+  border-radius: 50% !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
   flex-shrink: 0;
 }
 
-.menu-icono svg {
-  stroke: #ccc;
-}
-
-.menu-botones {
+/* ── BARRA SUPERIOR COMPARTIDA ── */
+.bb-header {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: #0f0f0f;
+  border-bottom: 1px solid #c9a84c22;
 }
-
-.menu-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: #f5e6d3;
-  color: #800020;
-  border: none;
-  border-radius: 4px;
-  font-size: 15px;
-  font-style: italic;
-  font-family: Georgia, serif;
+.bb-header-brand {
+  display: flex; align-items: center; gap: 10px;
   cursor: pointer;
 }
+.bb-scissors { font-size: 18px; color: #c9a84c; display: inline-block; transform: scaleX(-1); }
+.bb-logo { font-size: 17px; font-weight: bold; letter-spacing: 5px; color: #c9a84c; }
 
-.menu-btn:hover {
-  background-color: #edd9be;
+/* ── BOTONES GLOBALES ── */
+.bb-btn-gold {
+  padding: 13px 28px; background: #c9a84c; color: #0a0a0a;
+  border: none; border-radius: 4px; font-family: 'Georgia', serif;
+  font-size: 14px; font-weight: bold; letter-spacing: 1px; cursor: pointer; transition: all 0.2s;
 }
+.bb-btn-gold:hover { background: #d4b55c; box-shadow: 0 0 18px #c9a84c35; }
+.bb-btn-outline {
+  padding: 13px 28px; background: transparent; color: #f5f0e8;
+  border: 1px solid #c9a84c40; border-radius: 4px; font-family: 'Georgia', serif;
+  font-size: 14px; font-style: italic; cursor: pointer; transition: all 0.2s;
+}
+.bb-btn-outline:hover { border-color: #c9a84c; color: #c9a84c; }
+
+/* ── COMPAT LEGADO ── */
+.home-container { min-height: 100vh; background: #0a0a0a; }
+.home-btn {
+  width: 100%; padding: 13px 20px; background: transparent; color: #f5f0e8;
+  border: 1px solid #c9a84c40; border-radius: 4px; font-size: 14px;
+  font-style: italic; font-family: 'Georgia', serif; cursor: pointer; transition: all 0.2s;
+}
+.home-btn:hover { border-color: #c9a84c; color: #c9a84c; }
+
+/* ════ HOME PAGE ════ */
+.home-page { min-height: 100vh; background: #0a0a0a; display: flex; flex-direction: column; }
+
+.home-topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 24px; background: #0f0f0f; border-bottom: 1px solid #c9a84c22;
+}
+.home-topbar-brand { display: flex; align-items: center; gap: 10px; }
+.home-topbar-logo { font-size: 17px; font-weight: bold; letter-spacing: 5px; color: #c9a84c; }
+
+.home-hamburger {
+  background: transparent; border: 1.5px solid #c9a84c40;
+  border-radius: 6px; padding: 7px 9px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 4px; transition: border-color 0.2s;
+}
+.home-hamburger:hover { border-color: #c9a84c; }
+.home-bar { display: block; width: 20px; height: 2px; background: #c9a84c; transition: all 0.22s; }
+
+.home-dropdown { background: #111; border-bottom: 1px solid #c9a84c18; }
+.home-dropdown-inner { display: flex; align-items: center; gap: 20px; padding: 18px 24px; max-width: 440px; }
+.home-dropdown-avatar {
+  width: 52px; height: 52px; border-radius: 50%; background: #1a1a1a;
+  border: 1.5px solid #c9a84c35; display: flex; align-items: center;
+  justify-content: center; color: #c9a84c; flex-shrink: 0;
+}
+.home-dropdown-btns { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.home-dd-btn {
+  padding: 10px 16px; background: transparent; border: 1px solid #2a2a2a;
+  border-radius: 4px; color: #aaa; font-family: 'Georgia', serif; font-size: 13px;
+  cursor: pointer; transition: all 0.2s; text-align: left;
+}
+.home-dd-btn:hover { border-color: #c9a84c50; color: #f5f0e8; }
+.home-dd-btn-primary { border-color: #c9a84c40; color: #c9a84c; }
+.home-dd-btn-primary:hover { background: #c9a84c14; border-color: #c9a84c; }
+
+.home-hero {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 60px 24px; text-align: center;
+}
+.home-ornament { color: #c9a84c; font-size: 14px; letter-spacing: 10px; margin-bottom: 22px; opacity: 0.65; }
+.home-hero-title { font-size: 54px; font-weight: bold; letter-spacing: 14px; color: #c9a84c; margin-bottom: 12px; }
+.home-hero-sub { font-size: 12px; letter-spacing: 5px; color: #555; text-transform: uppercase; margin-bottom: 30px; }
+.home-hero-divider {
+  width: 50px; height: 1px;
+  background: linear-gradient(to right, transparent, #c9a84c, transparent);
+  margin-bottom: 40px;
+}
+.home-hero-btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; }

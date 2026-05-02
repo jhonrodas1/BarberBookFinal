@@ -1,0 +1,328 @@
+/* ════ CALENDARIO PÚBLICO ════ */
+.cp-page {
+  min-height: 100vh;
+  background: #0a0a0a;
+  font-family: 'Georgia', serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.cp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: #0f0f0f;
+  border-bottom: 1px solid #c9a84c22;
+}
+.cp-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Main */
+.cp-main {
+  flex: 1;
+  padding: 40px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Título */
+.cp-title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.cp-ornament {
+  color: #c9a84c;
+  font-size: 13px;
+  letter-spacing: 10px;
+  opacity: 0.6;
+}
+.cp-title {
+  font-size: 22px;
+  font-style: italic;
+  color: #f5f0e8;
+  letter-spacing: 2px;
+  margin: 0;
+}
+.cp-divider {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c9a84c, transparent);
+  margin-top: 4px;
+}
+
+/* Layout */
+.cp-layout {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* ── Columna izquierda: calendario ── */
+.cp-left {
+  flex: 0 0 auto;
+}
+
+.cp-cal-card {
+  background: #111;
+  border: 1px solid #c9a84c22;
+  border-radius: 10px;
+  padding: 22px 20px 16px;
+  width: 286px;
+}
+
+.cp-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.cp-cal-month {
+  font-size: 14px;
+  color: #f5f0e8;
+  letter-spacing: 0.5px;
+}
+.cp-nav-arrow {
+  background: transparent;
+  border: 1px solid #c9a84c35;
+  color: #c9a84c;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.cp-nav-arrow:hover:not(.disabled) {
+  background: #c9a84c18;
+  border-color: #c9a84c;
+}
+.cp-nav-arrow.disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.cp-cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+}
+.cp-weekday {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: #555;
+  padding: 4px 0;
+  text-transform: uppercase;
+}
+
+.cp-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+.cp-day-empty {
+  height: 34px;
+}
+.cp-day {
+  height: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #bbb;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s;
+  gap: 1px;
+}
+.cp-day:hover:not(.cp-day--past) {
+  background: #1e1e1e;
+  color: #f5f0e8;
+}
+.cp-day--past {
+  color: #333;
+  cursor: default;
+  text-decoration: line-through;
+  text-decoration-color: #2a2a2a;
+}
+.cp-day--today {
+  color: #c9a84c;
+  border: 1px solid #c9a84c40;
+}
+.cp-day--selected {
+  background: #c9a84c !important;
+  color: #0a0a0a !important;
+  font-weight: bold;
+  box-shadow: 0 0 14px #c9a84c40;
+}
+.cp-day--event {
+  color: #f5f0e8;
+}
+.cp-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c9a84c;
+  position: absolute;
+  bottom: 4px;
+}
+.cp-day--selected .cp-dot {
+  background: #0a0a0a;
+}
+
+/* Leyenda calendario */
+.cp-legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #1e1e1e;
+}
+.cp-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #555;
+}
+.cp-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cp-legend-dot--today { border: 1.5px solid #c9a84c; background: transparent; }
+.cp-legend-dot--event { background: #c9a84c; opacity: 0.5; }
+.cp-legend-dot--selected { background: #c9a84c; }
+
+/* ── Columna derecha: tabla ── */
+.cp-right {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cp-table-header {
+  padding: 0 0 4px;
+  border-bottom: 1px solid #c9a84c20;
+}
+.cp-table-date-label {
+  font-size: 15px;
+  font-style: italic;
+  color: #c9a84c;
+  letter-spacing: 0.5px;
+}
+
+.cp-table-wrap {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #1e1e1e;
+}
+.cp-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 520px;
+}
+.cp-th {
+  padding: 11px 8px;
+  background: #141414;
+  color: #c9a84c;
+  font-family: 'Georgia', serif;
+  font-size: 11px;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid #c9a84c25;
+}
+.cp-th-barbero {
+  text-align: left;
+  padding-left: 16px;
+  min-width: 160px;
+}
+.cp-th-hora {
+  min-width: 62px;
+}
+.cp-tr { background: #0f0f0f; }
+.cp-tr--alt { background: #111; }
+.cp-tr:last-child .cp-td-nombre,
+.cp-tr:last-child .cp-td-slot {
+  border-bottom: none;
+}
+.cp-td-nombre {
+  padding: 10px 12px 10px 16px;
+  border-bottom: 1px solid #1a1a1a;
+  white-space: nowrap;
+}
+.cp-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cp-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: 1px solid #c9a84c30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: bold;
+  color: #c9a84c;
+  flex-shrink: 0;
+}
+.cp-barbero-name {
+  font-size: 13px;
+  color: #d0ccc5;
+}
+.cp-td-slot {
+  text-align: center;
+  padding: 8px 4px;
+  border-bottom: 1px solid #1a1a1a;
+}
+.cp-td-slot--free { background: #0c140c; }
+.cp-td-slot--busy { background: #1a0505; }
+.cp-slot-icon {
+  font-size: 13px;
+  display: inline-block;
+}
+.cp-slot-icon--free { color: #3d7a3d; }
+.cp-slot-icon--busy { color: #800020; }
+
+/* Leyenda tabla */
+.cp-table-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.cp-tleg-box {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.cp-tleg-box--free { background: #0c140c; border: 1px solid #3d7a3d55; }
+.cp-tleg-box--busy { background: #1a0505; border: 1px solid #80002055; }

@@ -1,59 +1,53 @@
-.mc-wrapper {
-  display: flex;
-  min-height: 100vh;
-}
+/* ════ MENU CLIENTE — Luxury Sidebar ════ */
+.mcl-container { display: flex; min-height: 100vh; background: #0a0a0a; font-family: 'Georgia', serif; }
 
-.mc-izquierda {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 30px 40px;
-  gap: 20px;
+.mcl-sidebar {
+  width: 250px; min-height: 100vh; background: #111;
+  border-right: 1px solid #c9a84c22; display: flex; flex-direction: column;
+  padding: 26px 0; position: sticky; top: 0; height: 100vh;
 }
+.mcl-brand { display: flex; align-items: center; gap: 10px; padding: 0 22px 18px; cursor: pointer; }
+.mcl-brand-name { font-size: 16px; font-weight: bold; letter-spacing: 4px; color: #c9a84c; margin: 0; }
+.mcl-divider { height: 1px; background: linear-gradient(to right, transparent, #c9a84c35, transparent); margin: 0 18px 20px; }
 
-.mc-logo {
-  font-size: 26px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  font-family: Georgia, serif;
-  color: #800020;
-  margin-bottom: 20px;
+.mcl-nav { display: flex; flex-direction: column; gap: 3px; padding: 0 14px; }
+.mcl-nav-label { font-size: 10px; letter-spacing: 2px; color: #444; padding: 0 8px; margin: 0 0 7px; }
+.mcl-nav-btn {
+  display: flex; align-items: center; gap: 11px; background: transparent; border: none;
+  color: #999; font-family: 'Georgia', serif; font-size: 13px; padding: 10px 12px;
+  border-radius: 5px; cursor: pointer; text-align: left; transition: all 0.2s;
 }
+.mcl-nav-btn:hover { background: #1a1a1a; color: #f5f0e8; }
+.mcl-nav-icon { width: 19px; flex-shrink: 0; opacity: 0.65; }
+.mcl-nav-btn:hover .mcl-nav-icon { opacity: 1; }
 
-.mc-derecha {
-  width: 220px;
-  background-color: #800020;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px 20px;
-  gap: 16px;
+.mcl-spacer { flex: 1; }
+.mcl-logout {
+  display: flex; align-items: center; gap: 9px; margin: 0 14px; padding: 10px 12px;
+  background: transparent; border: 1px solid #1e1e1e; border-radius: 5px;
+  color: #444; font-family: 'Georgia', serif; font-size: 13px; cursor: pointer; transition: all 0.2s;
 }
+.mcl-logout:hover { border-color: #555; color: #777; }
 
-.mc-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #600018;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
+.mcl-main { flex: 1; display: flex; flex-direction: column; background: #0d0d0d; }
+.mcl-topbar { display: flex; justify-content: space-between; align-items: center; padding: 26px 36px; border-bottom: 1px solid #181818; }
+.mcl-welcome { font-size: 21px; color: #f5f0e8; margin: 0 0 3px; letter-spacing: 0.4px; }
+.mcl-date { font-size: 12px; color: #494949; font-style: italic; margin: 0; text-transform: capitalize; }
+.mcl-avatar {
+  width: 46px; height: 46px; border-radius: 50%; background: #1a1a1a;
+  border: 1px solid #c9a84c35; display: flex; align-items: center; justify-content: center; color: #c9a84c;
 }
-
-.mc-btn-crema {
-  width: 100%;
-  padding: 12px;
-  background-color: #f5e6d3;
-  color: #800020;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: Georgia, serif;
-  cursor: pointer;
+.mcl-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; padding: 34px 36px; max-width: 860px; }
+.mcl-card {
+  background: #141414; border: 1px solid #1e1e1e; border-left: 3px solid #c9a84c30;
+  border-radius: 8px; padding: 24px 20px; cursor: pointer; transition: all 0.22s; position: relative; overflow: hidden;
 }
-
-.mc-btn-crema:hover {
-  background-color: #edd9be;
+.mcl-card:hover { border-color: #c9a84c45; border-left-color: #c9a84c; transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,0.45); }
+.mcl-card-icon { color: #c9a84c; margin-bottom: 14px; opacity: 0.8; }
+.mcl-card-title { font-size: 16px; color: #f5f0e8; margin: 0 0 6px; letter-spacing: 0.4px; }
+.mcl-card-desc { font-size: 12px; color: #555; font-style: italic; margin: 0; }
+.mcl-card-arrow {
+  position: absolute; bottom: 18px; right: 20px; color: #c9a84c;
+  font-size: 17px; opacity: 0; transition: opacity 0.2s, transform 0.2s;
 }
+.mcl-card:hover .mcl-card-arrow { opacity: 1; transform: translateX(3px); }

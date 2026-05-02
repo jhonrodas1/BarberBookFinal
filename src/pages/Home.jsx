@@ -3,44 +3,47 @@ import './Home.css'
 
 function Home({ navegarA }) {
   const [menuAbierto, setMenuAbierto] = useState(false)
-
   return (
-    <div className="home-container">
-
-      <header className="home-header">
-        <span className="home-header-title">Inicio</span>
-        <div className="hamburger" onClick={() => setMenuAbierto(!menuAbierto)}>
-          <span></span>
-          <span></span>
-          <span></span>
+    <div className="home-page">
+      <header className="home-topbar">
+        <div className="home-topbar-brand">
+          <span className="bb-scissors">✂</span>
+          <span className="home-topbar-logo">BARBERBOOK</span>
         </div>
+        <button className="home-hamburger" onClick={() => setMenuAbierto(!menuAbierto)}>
+          <span className="home-bar"></span>
+          <span className="home-bar"></span>
+          <span className="home-bar"></span>
+        </button>
       </header>
 
       {menuAbierto && (
-        <div className="menu-lateral">
-          <div className="menu-icono">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="1.5">
-              <circle cx="12" cy="8" r="3" />
-              <path d="M6 20v-1a6 6 0 0 1 12 0v1" />
-              <circle cx="12" cy="12" r="10" />
-            </svg>
-          </div>
-          <div className="menu-botones">
-            <button className="menu-btn" onClick={() => navegarA('login')}>Iniciar Sesión</button>
-            <button className="menu-btn" onClick={() => navegarA('registro')}>Registrarse</button>
+        <div className="home-dropdown">
+          <div className="home-dropdown-inner">
+            <div className="home-dropdown-avatar">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div className="home-dropdown-btns">
+              <button className="home-dd-btn home-dd-btn-primary" onClick={() => navegarA('login')}>Iniciar Sesión</button>
+              <button className="home-dd-btn" onClick={() => navegarA('registro')}>Registrarse</button>
+            </div>
           </div>
         </div>
       )}
 
-      <main className="home-main">
-        <h1 className="home-logo">BARBERBOOK</h1>
-        <button className="home-btn" onClick={() => navegarA('servicios')}>Servicios Ofrecidos</button>
-        <button className="home-btn" onClick={() => navegarA('barberos')}>Barberos Activos</button>
-        <button className="home-btn" onClick={() => navegarA('calendarioPublico')}>Calendario</button>
+      <main className="home-hero">
+        <div className="home-ornament">— ✦ —</div>
+        <h1 className="home-hero-title">BARBERBOOK</h1>
+        <div className="home-hero-divider"></div>
+        <div className="home-hero-btns">
+          <button className="bb-btn-gold" onClick={() => navegarA('servicios')}>Servicios Ofrecidos</button>
+          <button className="bb-btn-outline" onClick={() => navegarA('barberos')}>Barberos Activos</button>
+          <button className="bb-btn-outline" onClick={() => navegarA('calendarioPublico')}>Calendario</button>
+        </div>
       </main>
-
     </div>
   )
 }
-
 export default Home

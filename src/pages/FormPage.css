@@ -1,92 +1,87 @@
-.form-logo-bar {
-  background-color: #800020;
-  padding: 16px;
-  text-align: center;
-}
+/* ════ LOGIN · REGISTRO · SELECCIÓN ROL ════ */
+.fp-page { min-height: 100vh; background: #0a0a0a; display: flex; flex-direction: column; }
 
-.form-logo {
-  color: white;
-  font-size: 26px;
-  font-weight: bold;
-  letter-spacing: 4px;
-  font-family: Georgia, serif;
+.fp-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 28px; background: #0f0f0f; border-bottom: 1px solid #c9a84c22;
 }
+.fp-logo { font-size: 17px; font-weight: bold; letter-spacing: 5px; color: #c9a84c; font-family: 'Georgia', serif; cursor: pointer; }
 
-.form-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
+.fp-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+
+.fp-eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #555; margin-bottom: 10px; text-align: center; }
+.fp-title { font-size: 30px; font-style: italic; color: #f5f0e8; margin-bottom: 6px; text-align: center; letter-spacing: 1px; }
+.fp-divider { width: 40px; height: 1px; background: linear-gradient(to right, transparent, #c9a84c, transparent); margin: 0 auto 28px; }
+
+.fp-card {
+  width: 420px; max-width: 100%; background: #111;
+  border: 1px solid #c9a84c28; border-top: 2px solid #c9a84c;
+  border-radius: 6px; padding: 34px 38px;
+  display: flex; flex-direction: column; gap: 18px;
 }
-
-.form-titulo {
-  font-size: 28px;
-  font-style: italic;
-  font-family: Georgia, serif;
-  color: #222;
-  margin-bottom: 20px;
+.fp-grupo { display: flex; flex-direction: column; gap: 6px; }
+.fp-grupo label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #666; font-family: 'Georgia', serif; }
+.fp-grupo input {
+  padding: 11px 14px; background: #0d0d0d; border: 1px solid #252525;
+  border-radius: 4px; font-size: 14px; font-family: 'Georgia', serif;
+  color: #f5f0e8; outline: none; transition: border-color 0.2s;
 }
+.fp-grupo input:focus { border-color: #c9a84c55; }
+.fp-grupo input::placeholder { color: #383838; }
+.fp-error { color: #ff8080; font-size: 12px; font-style: italic; }
+.fp-submit {
+  width: 100%; margin-top: 4px; padding: 13px;
+  background: #c9a84c; color: #0a0a0a; border: none; border-radius: 4px;
+  font-size: 14px; font-weight: bold; letter-spacing: 1.5px; font-family: 'Georgia', serif;
+  cursor: pointer; transition: all 0.2s;
+}
+.fp-submit:hover { background: #d4b55c; box-shadow: 0 0 16px #c9a84c30; }
+.fp-link { margin-top: 16px; font-size: 13px; font-style: italic; color: #c9a84c; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; text-align: center; }
+.fp-link:hover { opacity: 1; text-decoration: underline; }
 
+/* compat con Login/Registro existentes */
+.form-logo-bar { padding: 14px 28px; background: #0f0f0f; border-bottom: 1px solid #c9a84c22; display: flex; align-items: center; justify-content: center; }
+.form-logo { font-size: 17px; font-weight: bold; letter-spacing: 5px; color: #c9a84c; font-family: 'Georgia', serif; cursor: pointer; }
+.form-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+.form-titulo { font-size: 28px; font-style: italic; color: #f5f0e8; margin-bottom: 4px; letter-spacing: 1px; }
 .form-card {
-  width: 400px;
-  border: 1.5px solid #6ab0d4;
-  border-radius: 4px;
-  padding: 30px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: #fff;
+  width: 420px; max-width: 100%; background: #111;
+  border: 1px solid #c9a84c28; border-top: 2px solid #c9a84c;
+  border-radius: 6px; padding: 34px 38px; display: flex; flex-direction: column; gap: 18px;
 }
-
-.form-grupo {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-grupo label {
-  font-size: 14px;
-  font-family: Georgia, serif;
-  color: #333;
-}
-
+.form-grupo { display: flex; flex-direction: column; gap: 6px; }
+.form-grupo label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #666; font-family: 'Georgia', serif; }
 .form-grupo input {
-  padding: 8px 10px;
-  border: 1px solid #bbb;
-  border-radius: 3px;
-  font-size: 14px;
-  font-family: Georgia, serif;
-  outline: none;
+  padding: 11px 14px; background: #0d0d0d; border: 1px solid #252525;
+  border-radius: 4px; font-size: 14px; font-family: 'Georgia', serif;
+  color: #f5f0e8; outline: none; transition: border-color 0.2s;
 }
-
-.form-grupo input:focus {
-  border-color: #800020;
-}
-
+.form-grupo input:focus { border-color: #c9a84c55; }
 .form-btn {
-  width: 70%;
-  margin: 10px auto 0;
-  padding: 14px;
-  background-color: #800020;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-style: italic;
-  font-family: Georgia, serif;
-  cursor: pointer;
-  display: block;
+  width: 100%; padding: 13px; background: #c9a84c; color: #0a0a0a; border: none;
+  border-radius: 4px; font-size: 14px; font-weight: bold; letter-spacing: 1.5px;
+  font-family: 'Georgia', serif; cursor: pointer; transition: all 0.2s; display: block; margin: 4px 0 0;
 }
+.form-btn:hover { background: #d4b55c; }
+.form-link { margin-top: 14px; font-size: 13px; font-style: italic; color: #c9a84c; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; text-align: center; }
+.form-link:hover { opacity: 1; text-decoration: underline; }
 
-.form-btn:hover {
-  background-color: #600018;
+/* ── SELECCIÓN ROL ── */
+.rol-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; gap: 12px; }
+.rol-subtitulo { font-size: 11px; letter-spacing: 3.5px; text-transform: uppercase; color: #555; margin-bottom: 20px; }
+.rol-card {
+  width: 340px; max-width: 100%; background: #111; border: 1px solid #1e1e1e;
+  border-radius: 6px; padding: 18px 22px; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
-
-.form-link {
-  margin-top: 16px;
-  font-size: 13px;
-  font-family: Georgia, serif;
-  color: #800020;
-  cursor: pointer;
-  text-decoration: underline;
+.rol-card:hover { border-color: #c9a84c50; background: #141414; }
+.rol-card-left { display: flex; align-items: center; gap: 14px; }
+.rol-icon {
+  width: 38px; height: 38px; border-radius: 50%; background: #1a1a1a;
+  border: 1px solid #c9a84c30; display: flex; align-items: center;
+  justify-content: center; color: #c9a84c; flex-shrink: 0;
 }
+.rol-card:hover .rol-icon { border-color: #c9a84c70; background: #c9a84c10; }
+.rol-name { font-size: 15px; font-style: italic; color: #f5f0e8; letter-spacing: 0.5px; }
+.rol-arrow { color: #c9a84c; font-size: 18px; opacity: 0; transition: opacity 0.2s, transform 0.2s; }
+.rol-card:hover .rol-arrow { opacity: 1; transform: translateX(4px); }

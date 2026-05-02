@@ -1,81 +1,17 @@
-.sv-header {
-  display: flex;
-  align-items: center;
-  padding: 16px 30px;
-  gap: 16px;
-  border-bottom: 1px solid #eee;
-}
-
-.sv-flecha {
-  font-size: 24px;
-  cursor: pointer;
-  color: #800020;
-  font-weight: bold;
-}
-
-.sv-logo {
-  font-size: 26px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  font-family: Georgia, serif;
-  color: #222;
-}
-
-.sv-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px 60px;
-  gap: 16px;
-}
-
-.sv-titulo-box {
-  border: 1.5px solid #800020;
-  border-radius: 40px;
-  padding: 14px 40px;
-  background-color: #f5e6d3;
-  margin-bottom: 10px;
-}
-
-.sv-titulo {
-  font-size: 22px;
-  font-style: italic;
-  font-family: Georgia, serif;
-  color: #333;
-}
-
-.sv-lista {
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+/* ════ SERVICIOS ════ */
+.sv-page { min-height: 100vh; background: #0a0a0a; font-family: 'Georgia', serif; }
+.sv-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #0f0f0f; border-bottom: 1px solid #c9a84c22; }
+.sv-main { display: flex; flex-direction: column; align-items: center; padding: 48px 24px; gap: 14px; }
+.sv-ornament { color: #c9a84c; font-size: 13px; letter-spacing: 8px; margin-bottom: 6px; opacity: 0.6; }
+.sv-titulo { font-size: 26px; font-style: italic; color: #f5f0e8; letter-spacing: 1px; margin-bottom: 4px; }
+.sv-divider { width: 40px; height: 1px; background: linear-gradient(to right, transparent, #c9a84c, transparent); margin-bottom: 28px; }
+.sv-lista { width: 100%; max-width: 580px; display: flex; flex-direction: column; gap: 10px; }
 .sv-item {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 40px;
-  padding: 14px 24px;
-  gap: 14px;
-  background: #fff;
+  display: flex; align-items: center; gap: 16px;
+  background: #111; border: 1px solid #1e1e1e; border-left: 3px solid #c9a84c40;
+  border-radius: 6px; padding: 16px 22px; transition: all 0.2s;
 }
-
-.sv-icono {
-  font-size: 20px;
-  color: #800020;
-}
-
-.sv-nombre {
-  flex: 1;
-  font-size: 15px;
-  font-family: Georgia, serif;
-  color: #222;
-}
-
-.sv-precio {
-  font-size: 15px;
-  font-family: Georgia, serif;
-  color: #222;
-}
+.sv-item:hover { border-color: #c9a84c40; border-left-color: #c9a84c; }
+.sv-icono { font-size: 16px; color: #c9a84c; flex-shrink: 0; }
+.sv-nombre { flex: 1; font-size: 14px; color: #e8e3da; letter-spacing: 0.3px; }
+.sv-precio { font-size: 14px; color: #c9a84c; font-style: italic; }

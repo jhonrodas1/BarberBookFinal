@@ -1,4 +1,4 @@
-import './MenuCliente.css'
+import './Home.css'
 
 export default function AgendaBarbero({ navegarA, usuario }) {
   const citas = JSON.parse(localStorage.getItem('citas')) || []
@@ -6,20 +6,30 @@ export default function AgendaBarbero({ navegarA, usuario }) {
   const ordenadas = [...misCitas].sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
 
   return (
-    <div className="home-container">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px 30px', borderBottom: '1px solid #eee' }}>
-        <span style={{ fontSize: '22px', cursor: 'pointer', color: '#800020', fontWeight: 'bold' }} onClick={() => navegarA('menuBarbero')}>←</span>
-        <h1 style={{ fontFamily: 'Georgia, serif', color: '#800020', letterSpacing: '3px', fontSize: '22px', margin: 0 }}>BARBERBOOK</h1>
-      </div>
-      <div style={{ padding: '30px 40px' }}>
-        <h2 style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', marginBottom: '24px' }}>Mi Agenda</h2>
+    <div style={{ minHeight:'100vh', background:'#0a0a0a', fontFamily:'Georgia, serif' }}>
+      <header className="bb-header">
+        <button className="bb-back" onClick={() => navegarA('menuBarbero')}>
+          <span className="bb-back-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg></span>
+          Volver
+        </button>
+        <span className="bb-logo">BARBERBOOK</span>
+        <div style={{width:'90px'}}/>
+      </header>
+
+      <div style={{ maxWidth:'680px', margin:'0 auto', padding:'40px 24px' }}>
+        <p style={{ fontSize:'11px', letterSpacing:'3px', color:'#555', textTransform:'uppercase', marginBottom:'8px' }}>Mi panel</p>
+        <h2 style={{ fontSize:'26px', fontStyle:'italic', color:'#f5f0e8', marginBottom:'4px' }}>Mi Agenda</h2>
+        <div style={{ width:'40px', height:'1px', background:'linear-gradient(to right, transparent, #c9a84c, transparent)', marginBottom:'28px' }}/>
+
         {ordenadas.length === 0
-          ? <p style={{ fontFamily: 'Georgia, serif', color: '#888', fontStyle: 'italic' }}>No tienes citas asignadas.</p>
+          ? <p style={{ color:'#555', fontStyle:'italic', fontSize:'14px' }}>No tienes citas asignadas.</p>
           : ordenadas.map((c, i) => (
-            <div key={i} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '16px 24px', marginBottom: '12px', background: '#fff', maxWidth: '500px', borderLeft: '4px solid #800020' }}>
-              <p style={{ fontFamily: 'Georgia, serif', fontWeight: 'bold', fontSize: '15px', marginBottom: '6px' }}>{c.fecha} · {c.hora}</p>
-              <p style={{ fontFamily: 'Georgia, serif', fontSize: '13px', color: '#555' }}>Cliente: {c.cliente}</p>
-              <p style={{ fontFamily: 'Georgia, serif', fontSize: '13px', color: '#555' }}>Servicio: {c.servicio}</p>
+            <div key={i} style={{ background:'#111', border:'1px solid #1e1e1e', borderLeft:'3px solid #c9a84c', borderRadius:'6px', padding:'16px 22px', marginBottom:'10px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <div>
+                <p style={{ color:'#c9a84c', fontSize:'13px', fontWeight:'bold', marginBottom:'4px' }}>{c.fecha} · {c.hora}</p>
+                <p style={{ color:'#ccc', fontSize:'13px', margin:'2px 0' }}>Cliente: {c.cliente}</p>
+                <p style={{ color:'#888', fontSize:'12px', fontStyle:'italic' }}>{c.servicio}</p>
+              </div>
             </div>
           ))
         }

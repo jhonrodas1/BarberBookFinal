@@ -1,49 +1,21 @@
+.bb-page { min-height: 100vh; background: #0a0a0a; font-family: 'Georgia', serif; }
+.bb-page-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #0f0f0f; border-bottom: 1px solid #c9a84c22; }
+.bb-page-main { display: flex; flex-direction: column; align-items: center; padding: 48px 24px; gap: 0; }
+.bb-ornament { color: #c9a84c; font-size: 13px; letter-spacing: 8px; margin-bottom: 8px; opacity: 0.6; }
+.bb-page-titulo { font-size: 26px; font-style: italic; color: #f5f0e8; letter-spacing: 1px; margin-bottom: 4px; }
+.bb-page-divider { width: 40px; height: 1px; background: linear-gradient(to right, transparent, #c9a84c, transparent); margin-bottom: 28px; }
+.bb-lista { width: 100%; max-width: 580px; display: flex; flex-direction: column; gap: 10px; }
 .bb-item {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px 24px;
-  gap: 20px;
-  background: #fff;
-  width: 100%;
-  max-width: 600px;
+  display: flex; align-items: center; gap: 18px;
+  background: #111; border: 1px solid #1e1e1e; border-left: 3px solid #c9a84c40;
+  border-radius: 6px; padding: 16px 20px; transition: all 0.2s;
 }
-
+.bb-item:hover { border-color: #c9a84c40; border-left-color: #c9a84c; }
 .bb-avatar {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background-color: #f5e6d3;
-  border: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-family: Georgia, serif;
-  font-weight: bold;
-  color: #800020;
-  flex-shrink: 0;
+  width: 46px; height: 46px; border-radius: 50%; background: #1a1a1a;
+  border: 1.5px solid #c9a84c40; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: bold; color: #c9a84c; flex-shrink: 0;
 }
-
-.bb-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.bb-nombre {
-  font-size: 15px;
-  font-weight: bold;
-  font-family: Georgia, serif;
-  color: #222;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.bb-esp {
-  font-size: 13px;
-  font-style: italic;
-  font-family: Georgia, serif;
-  color: #555;
-}
+.bb-info { display: flex; flex-direction: column; gap: 2px; }
+.bb-nombre { font-size: 14px; font-weight: bold; color: #f5f0e8; letter-spacing: 0.5px; margin: 0; }
+.bb-esp { font-size: 12px; font-style: italic; color: #666; margin: 0; }
