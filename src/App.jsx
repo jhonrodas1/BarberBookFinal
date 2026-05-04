@@ -19,6 +19,7 @@ import GestionBarberos from './pages/GestionBarberos'
 import HorarioBarbero from './pages/HorarioBarbero'
 import AgendaBarbero from './pages/AgendaBarbero'
 import GestionCitasBarbero from './pages/GestionCitasBarbero'
+import CambiarContrasena from './pages/CambiarContrasena'
 
 function App() {
   const [pantalla, setPantalla] = useState('home')
@@ -73,6 +74,7 @@ function App() {
   if (pantalla === 'horarioBarbero')   return <HorarioBarbero   navegarA={navegarA} usuario={usuario} />
   if (pantalla === 'agendaBarbero')    return <AgendaBarbero    navegarA={navegarA} usuario={usuario} />
   if (pantalla === 'gestionCitasBarbero') return <GestionCitasBarbero navegarA={navegarA} usuario={usuario} />
+  if (pantalla === 'cambiarContrasena') return <CambiarContrasena navegarA={navegarA} usuario={usuario} iniciarSesion={iniciarSesion} />
 
   return <Home navegarA={navegarA} />
 }

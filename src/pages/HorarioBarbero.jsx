@@ -1,66 +1,141 @@
 import { useState } from 'react'
 import './Home.css'
-
-const DIAS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
-const HORAS = ['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM']
+import { apiFetch } from '../api/client'
 
 export default function HorarioBarbero({ navegarA, usuario }) {
-  const clave = `horario_${usuario?.nombre || 'barbero'}`
-  const [horario, setHorario] = useState(() => JSON.parse(localStorage.getItem(clave)) || {})
+  const [dias, setDias] = useState([{ date: '', startTime: '', endTime: '' }])
   const [guardado, setGuardado] = useState(false)
+  const [error, setError] = useState('')
+  const [cargando, setCargando] = useState(false)
 
-  function toggleHora(dia, hora) {
-    const actual = horario[dia] || []
-    const nuevo = actual.includes(hora) ? actual.filter(h => h !== hora) : [...actual, hora]
-    setHorario({ ...horario, [dia]: nuevo })
-    setGuardado(false)
+  const agregarDia = () => {
+    setDias([...dias, { date: '', startTime: '', endTime: '' }])
   }
 
-  function guardar() {
-    localStorage.setItem(clave, JSON.stringify(horario))
-    setGuardado(true)
-    setTimeout(() => setGuardado(false), 2200)
+  const cambiarDia = (index, campo, valor) => {
+    const nuevos = dias.map((d, i) => i === index ? { ...d, [campo]: valor } : d)
+    setDias(nuevos)
+    setError('')
+  }
+
+  const eliminarDia = (index) => {
+    setDias(dias.filter((_, i) => i !== index))
+  }
+
+  const guardar = async () => {
+    const incompleto = dias.some(d => !d.date || !d.startTime || !d.endTime)
+    if (incompleto) {
+      setError('Completa todos los campos de cada día.')
+      return
+    }
+    setCargando(true)
+    try {
+      await apiFetch('/employee/availability', {
+        method: 'POST',
+        body: JSON.stringify({ days: dias }),
+      })
+      setGuardado(true)
+      setTimeout(() => setGuardado(false), 2200)
+    } catch (err) {
+      setError(err.message || 'Error al guardar la disponibilidad.')
+    } finally {
+      setCargando(false)
+    }
   }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#0a0a0a', fontFamily:'Georgia, serif' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0a', fontFamily: 'Georgia, serif' }}>
       <header className="bb-header">
         <button className="bb-back" onClick={() => navegarA('menuBarbero')}>
-          <span className="bb-back-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg></span>
+          <span className="bb-back-icon">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M19 12H5M5 12l7 7M5 12l7-7"/>
+            </svg>
+          </span>
           Volver
         </button>
         <span className="bb-logo">BARBERBOOK</span>
-        <div style={{width:'90px'}}/>
+        <div style={{ width: '90px' }} />
       </header>
 
-      <div style={{ maxWidth:'900px', margin:'0 auto', padding:'40px 24px' }}>
-        <p style={{ fontSize:'11px', letterSpacing:'3px', color:'#555', textTransform:'uppercase', marginBottom:'8px' }}>Mi panel</p>
-        <h2 style={{ fontSize:'26px', fontStyle:'italic', color:'#f5f0e8', marginBottom:'4px' }}>Mi Horario Disponible</h2>
-        <div style={{ width:'40px', height:'1px', background:'linear-gradient(to right, transparent, #c9a84c, transparent)', marginBottom:'6px' }}/>
-        <p style={{ fontSize:'12px', color:'#555', fontStyle:'italic', marginBottom:'28px' }}>Selecciona las horas en que estás disponible cada día</p>
+      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '40px 24px' }}>
+        <p style={{ fontSize: '11px', letterSpacing: '3px', color: '#555', textTransform: 'uppercase', marginBottom: '8px' }}>Mi panel</p>
+        <h2 style={{ fontSize: '26px', fontStyle: 'italic', color: '#f5f0e8', marginBottom: '4px' }}>Mi Disponibilidad</h2>
+        <div style={{ width: '40px', height: '1px', background: 'linear-gradient(to right, transparent, #c9a84c, transparent)', marginBottom: '6px' }} />
+        <p style={{ fontSize: '12px', color: '#555', fontStyle: 'italic', marginBottom: '28px' }}>
+          Agrega los días y horarios en que estarás disponible
+        </p>
 
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'14px', marginBottom:'28px' }}>
-          {DIAS.map(dia => (
-            <div key={dia} style={{ background:'#111', border:'1px solid #1e1e1e', borderRadius:'6px', padding:'16px', minWidth:'150px' }}>
-              <p style={{ color:'#c9a84c', fontWeight:'bold', fontSize:'13px', letterSpacing:'0.5px', marginBottom:'10px' }}>{dia}</p>
-              {HORAS.map(h => {
-                const activo = (horario[dia] || []).includes(h)
-                return (
-                  <div key={h} onClick={() => toggleHora(dia, h)} style={{
-                    padding:'6px 10px', marginBottom:'4px', borderRadius:'4px', cursor:'pointer',
-                    background: activo ? '#c9a84c' : '#0f0f0f',
-                    color: activo ? '#0a0a0a' : '#666',
-                    border: `1px solid ${activo ? '#c9a84c' : '#252525'}`,
-                    fontSize:'12px', transition:'all 0.15s', fontWeight: activo ? 'bold' : 'normal'
-                  }}>{h}</div>
-                )
-              })}
+        {dias.map((dia, index) => (
+          <div key={index} style={{
+            background: '#111', border: '1px solid #1e1e1e', borderRadius: '6px',
+            padding: '20px', marginBottom: '12px'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <p style={{ color: '#c9a84c', fontSize: '13px', fontWeight: 'bold' }}>Día {index + 1}</p>
+              {dias.length > 1 && (
+                <button onClick={() => eliminarDia(index)} style={{
+                  background: 'none', border: 'none', color: '#555', cursor: 'pointer', fontSize: '18px'
+                }}>×</button>
+              )}
             </div>
-          ))}
-        </div>
 
-        <button className="bb-btn-gold" style={{ minWidth:'180px' }} onClick={guardar}>
-          {guardado ? '✓ Guardado' : 'Guardar Horario'}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div>
+                <label style={{ color: '#888', fontSize: '12px', display: 'block', marginBottom: '4px' }}>Fecha:</label>
+                <input
+                  type="date"
+                  value={dia.date}
+                  onChange={e => cambiarDia(index, 'date', e.target.value)}
+                  style={{ width: '100%', padding: '10px', background: '#0d0d0d', border: '1px solid #252525', borderRadius: '4px', color: '#f5f0e8', fontSize: '14px', fontFamily: 'Georgia, serif' }}
+                />
+              </div>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <div style={{ flex: 1 }}>
+                  <label style={{ color: '#888', fontSize: '12px', display: 'block', marginBottom: '4px' }}>Hora inicio:</label>
+                  <input
+                    type="time"
+                    value={dia.startTime}
+                    onChange={e => cambiarDia(index, 'startTime', e.target.value)}
+                    style={{ width: '100%', padding: '10px', background: '#0d0d0d', border: '1px solid #252525', borderRadius: '4px', color: '#f5f0e8', fontSize: '14px', fontFamily: 'Georgia, serif' }}
+                  />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={{ color: '#888', fontSize: '12px', display: 'block', marginBottom: '4px' }}>Hora fin:</label>
+                  <input
+                    type="time"
+                    value={dia.endTime}
+                    onChange={e => cambiarDia(index, 'endTime', e.target.value)}
+                    style={{ width: '100%', padding: '10px', background: '#0d0d0d', border: '1px solid #252525', borderRadius: '4px', color: '#f5f0e8', fontSize: '14px', fontFamily: 'Georgia, serif' }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <button onClick={agregarDia} style={{
+          width: '100%', padding: '12px', background: 'transparent',
+          border: '1px dashed #333', borderRadius: '6px', color: '#555',
+          fontSize: '13px', cursor: 'pointer', marginBottom: '16px', fontFamily: 'Georgia, serif'
+        }}>
+          + Agregar otro día
+        </button>
+
+        {error && <p style={{ color: '#800020', fontSize: '13px', marginBottom: '12px' }}>{error}</p>}
+
+        {guardado && (
+          <p style={{ color: '#c9a84c', fontSize: '13px', fontStyle: 'italic', marginBottom: '12px' }}>
+            ✓ Disponibilidad guardada con éxito
+          </p>
+        )}
+
+        <button onClick={guardar} disabled={cargando} style={{
+          width: '100%', padding: '14px', background: '#c9a84c',
+          border: 'none', borderRadius: '6px', color: '#0a0a0a',
+          fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'Georgia, serif'
+        }}>
+          {cargando ? 'Guardando...' : 'Guardar disponibilidad'}
         </button>
       </div>
     </div>

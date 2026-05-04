@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react'
 import './Home.css'
-
-const BARBEROS_BASE = ['Carlos Rodríguez', 'Miguel Ángel Torres', 'Diego Fernández']
-const servicios = [
-  { nombre: 'Corte de cabello', precio: '$15.000' },
-  { nombre: 'Corte de Barba',   precio: '$12.000' },
-  { nombre: 'Afeitado',         precio: '$15.000' },
-  { nombre: 'Corte y Barba',    precio: '$20.000' },
-]
-const HORAS = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM']
+import { apiFetch } from '../api/client'
 
 const inp = {
   padding: '11px 14px', background: '#0d0d0d', border: '1px solid #252525',
@@ -16,51 +8,106 @@ const inp = {
   color: '#f5f0e8', outline: 'none', width: '100%',
 }
 
-export default function Citas({ navegarA, origen = 'menuCliente', usuario }) {
-  const [forma, setForma] = useState({ nombre: usuario?.nombre || '', barbero: '', servicio: '', fecha: '', hora: '' })
+export default function Citas({ navegarA, origen = 'menuCliente' }) {
+  const [paso, setPaso] = useState(1)
+  const [servicios, setServicios] = useState([])
+  const [serviciosSeleccionados, setServiciosSeleccionados] = useState([])
+  const [barberos, setBarberos] = useState([])
+  const [barberoSeleccionado, setBarberoSeleccionado] = useState(null)
+  const [fechasDisponibles, setFechasDisponibles] = useState([])
+  const [fechaSeleccionada, setFechaSeleccionada] = useState('')
+  const [slots, setSlots] = useState([])
+  const [slotSeleccionado, setSlotSeleccionado] = useState(null)
   const [enviado, setEnviado] = useState(false)
-  const [barberos, setBarberos] = useState(BARBEROS_BASE)
-  const [horasOcupadas, setHorasOcupadas] = useState([])
+  const [error, setError] = useState('')
+  const [cargando, setCargando] = useState(false)
 
+  // Paso 1: cargar servicios
   useEffect(() => {
-    const guardados = JSON.parse(localStorage.getItem('listaBarberos')) || []
-    setBarberos([...BARBEROS_BASE, ...guardados.map(b => b.nombre)])
+    apiFetch('/appointments/services')
+      .then(data => setServicios(data.filter(s => s.available)))
+      .catch(() => setError('No se pudieron cargar los servicios.'))
   }, [])
 
+  // Paso 2: cargar barberos cuando hay servicios seleccionados
   useEffect(() => {
-    if (!forma.barbero || !forma.fecha) { setHorasOcupadas([]); return }
-    const citas = JSON.parse(localStorage.getItem('citas')) || []
-    setHorasOcupadas(citas.filter(c => c.barbero === forma.barbero && c.fecha === forma.fecha).map(c => c.hora))
-  }, [forma.barbero, forma.fecha])
+    if (serviciosSeleccionados.length === 0) { setBarberos([]); return }
+    console.log('Buscando barberos para servicio:', serviciosSeleccionados[0])
+    setCargando(true)
+    apiFetch(`/appointments/services/${serviciosSeleccionados[0]}/employees`)
+      .then(data => setBarberos(data))
+      .catch(() => setError('No hay barberos disponibles para ese servicio.'))
+      .finally(() => setCargando(false))
+  }, [serviciosSeleccionados])
 
-  function manejarCambio(e) {
-    const nuevo = { ...forma, [e.target.name]: e.target.value }
-    if (e.target.name === 'barbero' || e.target.name === 'fecha') nuevo.hora = ''
-    setForma(nuevo)
+  // Paso 3: cargar fechas disponibles cuando hay barbero
+  useEffect(() => {
+    if (!barberoSeleccionado) return
+    setCargando(true)
+    apiFetch(`/appointments/employees/${barberoSeleccionado.id}/dates`)
+      .then(data => setFechasDisponibles(data.availableDates || []))
+      .catch(() => setError('No se pudieron cargar las fechas.'))
+      .finally(() => setCargando(false))
+  }, [barberoSeleccionado])
+
+  // Paso 4: cargar slots cuando hay fecha
+  useEffect(() => {
+    if (!fechaSeleccionada || !barberoSeleccionado) return
+    setCargando(true)
+    const params = new URLSearchParams()
+    params.append('date', fechaSeleccionada)
+    serviciosSeleccionados.forEach(id => params.append('serviceIds', id))
+    apiFetch(`/appointments/employees/${barberoSeleccionado.id}/slots?${params}`)
+      .then(data => setSlots(data))
+      .catch(() => setError('No hay horarios disponibles para esa fecha.'))
+      .finally(() => setCargando(false))
+  }, [fechaSeleccionada])
+
+  const toggleServicio = (id) => {
+    setServiciosSeleccionados(prev =>
+      prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
+    )
+    setBarberoSeleccionado(null)
+    setFechaSeleccionada('')
+    setSlotSeleccionado(null)
+    setError('')
   }
 
-  function elegirHora(hora) {
-    if (horasOcupadas.includes(hora)) return
-    setForma({ ...forma, hora })
+  const confirmarCita = async () => {
+    setCargando(true)
+    setError('')
+    try {
+      await apiFetch('/appointments/confirm', {
+        method: 'POST',
+        body: JSON.stringify({
+          employeeId: barberoSeleccionado.id,
+          date: fechaSeleccionada,
+          startTime: slotSeleccionado.startTime,
+          serviceIds: serviciosSeleccionados,
+        }),
+      })
+      setEnviado(true)
+      setTimeout(() => navegarA(origen), 2200)
+    } catch (err) {
+      setError(err.message || 'Error al confirmar la cita.')
+    } finally {
+      setCargando(false)
+    }
   }
 
-  function manejarEnvio(e) {
-    e.preventDefault()
-    if (!forma.nombre || !forma.barbero || !forma.servicio || !forma.fecha || !forma.hora) return
-    const nueva = { cliente: forma.nombre, barbero: forma.barbero, servicio: forma.servicio, fecha: forma.fecha, hora: forma.hora }
-    const guardadas = JSON.parse(localStorage.getItem('citas')) || []
-    localStorage.setItem('citas', JSON.stringify([...guardadas, nueva]))
-    setEnviado(true)
-    setTimeout(() => navegarA(origen), 2200)
-  }
-
-  const mostrarHoras = forma.barbero && forma.fecha
-  const servicioObj = servicios.find(s => s.nombre === forma.servicio)
+  if (enviado) return (
+    <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Georgia, serif' }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: '48px', color: '#c9a84c', marginBottom: '16px' }}>✓</div>
+        <p style={{ color: '#f5f0e8', fontSize: '18px', fontStyle: 'italic' }}>¡Cita agendada con éxito!</p>
+      </div>
+    </div>
+  )
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0a', fontFamily: 'Georgia, serif' }}>
       <header className="bb-header">
-        <button className="bb-back" onClick={() => navegarA(origen)}>
+        <button className="bb-back" onClick={() => paso > 1 ? setPaso(paso - 1) : navegarA(origen)}>
           <span className="bb-back-icon">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M19 12H5M5 12l7 7M5 12l7-7"/>
@@ -72,128 +119,144 @@ export default function Citas({ navegarA, origen = 'menuCliente', usuario }) {
         <div style={{ width: '90px' }} />
       </header>
 
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '44px 24px' }}>
-        <div style={{ width: '100%', maxWidth: '500px' }}>
+      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '40px 24px' }}>
+        <p style={{ fontSize: '11px', letterSpacing: '3px', color: '#555', textTransform: 'uppercase', marginBottom: '8px' }}>
+          Paso {paso} de 4
+        </p>
+        <h2 style={{ fontSize: '26px', fontStyle: 'italic', color: '#f5f0e8', marginBottom: '4px' }}>
+          {paso === 1 && 'Selecciona los servicios'}
+          {paso === 2 && 'Selecciona un barbero'}
+          {paso === 3 && 'Selecciona fecha y hora'}
+          {paso === 4 && 'Confirma tu cita'}
+        </h2>
+        <div style={{ width: '40px', height: '1px', background: 'linear-gradient(to right, transparent, #c9a84c, transparent)', marginBottom: '28px' }} />
 
-          {/* Título */}
-          <p style={{ fontSize: '11px', letterSpacing: '3px', color: '#555', textTransform: 'uppercase', marginBottom: '8px' }}>Mi cuenta</p>
-          <h2 style={{ fontSize: '26px', fontStyle: 'italic', color: '#f5f0e8', marginBottom: '4px', letterSpacing: '0.5px' }}>Reservar Cita</h2>
-          <div style={{ width: '40px', height: '1px', background: 'linear-gradient(to right, transparent, #c9a84c, transparent)', marginBottom: '32px' }} />
+        {error && <p style={{ color: '#800020', fontSize: '13px', marginBottom: '16px' }}>{error}</p>}
+        {cargando && <p style={{ color: '#888', fontStyle: 'italic', fontSize: '13px' }}>Cargando...</p>}
 
-          {/* Card */}
-          <div style={{ background: '#111', border: '1px solid #c9a84c28', borderTop: '2px solid #c9a84c', borderRadius: '8px', padding: '34px 36px' }}>
-
-            {!enviado ? (
-              <form onSubmit={manejarEnvio} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-
-                {/* Nombre */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', color: '#666' }}>Nombre completo</label>
-                  <input style={inp} type="text" name="nombre" placeholder="Tu nombre" value={forma.nombre} onChange={manejarCambio}
-                    onFocus={e => e.target.style.borderColor='#c9a84c55'} onBlur={e => e.target.style.borderColor='#252525'} required />
-                </div>
-
-                {/* Barbero */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', color: '#666' }}>Barbero</label>
-                  <select style={inp} name="barbero" value={forma.barbero} onChange={manejarCambio}
-                    onFocus={e => e.target.style.borderColor='#c9a84c55'} onBlur={e => e.target.style.borderColor='#252525'}>
-                    <option value="">— Selecciona un barbero —</option>
-                    {barberos.map(b => <option key={b} value={b}>{b}</option>)}
-                  </select>
-                </div>
-
-                {/* Servicio */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', color: '#666' }}>Servicio</label>
-                  <select style={inp} name="servicio" value={forma.servicio} onChange={manejarCambio}
-                    onFocus={e => e.target.style.borderColor='#c9a84c55'} onBlur={e => e.target.style.borderColor='#252525'}>
-                    <option value="">— Selecciona un servicio —</option>
-                    {servicios.map(s => <option key={s.nombre} value={s.nombre}>{s.nombre} — {s.precio}</option>)}
-                  </select>
-                </div>
-
-                {/* Fecha */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', color: '#666' }}>Fecha</label>
-                  <input style={{ ...inp, cursor: 'pointer' }} type="date" name="fecha" value={forma.fecha} onChange={manejarCambio}
-                    min={new Date().toISOString().split('T')[0]}
-                    onClick={e => e.target.showPicker && e.target.showPicker()}
-                    onFocus={e => { e.target.style.borderColor='#c9a84c55'; e.target.showPicker && e.target.showPicker() }}
-                    onBlur={e => e.target.style.borderColor='#252525'} />
-                </div>
-
-                {/* Horas */}
-                {mostrarHoras ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <label style={{ fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', color: '#666' }}>Hora disponible</label>
-                      {horasOcupadas.length > 0 && (
-                        <span style={{ fontSize: '11px', color: '#555', fontStyle: 'italic' }}>{horasOcupadas.length} ocupada{horasOcupadas.length !== 1 ? 's' : ''}</span>
-                      )}
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '7px' }}>
-                      {HORAS.map(h => {
-                        const ocupada = horasOcupadas.includes(h)
-                        const seleccionada = forma.hora === h
-                        return (
-                          <div key={h} onClick={() => elegirHora(h)} style={{
-                            padding: '9px 4px', borderRadius: '4px', textAlign: 'center',
-                            fontSize: '12px', cursor: ocupada ? 'not-allowed' : 'pointer',
-                            fontFamily: 'Georgia, serif', transition: 'all 0.15s',
-                            background: seleccionada ? '#c9a84c' : ocupada ? '#0f0f0f' : '#0d2a1a',
-                            border: `1px solid ${seleccionada ? '#c9a84c' : ocupada ? '#1e1e1e' : '#2d6a4f'}`,
-                            color: seleccionada ? '#0a0a0a' : ocupada ? '#2a2a2a' : '#5cb85c',
-                            fontWeight: seleccionada ? 'bold' : 'normal',
-                          }}>
-                            {h}
-                          </div>
-                        )
-                      })}
-                    </div>
-                    {forma.hora && (
-                      <p style={{ fontSize: '12px', color: '#c9a84c', fontStyle: 'italic' }}>
-                        ✓ Seleccionada: <strong>{forma.hora}</strong>
-                      </p>
-                    )}
+        {/* Paso 1: Servicios */}
+        {paso === 1 && (
+          <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
+              {servicios.map(s => {
+                const seleccionado = serviciosSeleccionados.includes(s.id)
+                return (
+                  <div key={s.id} onClick={() => toggleServicio(s.id)} style={{
+                    background: seleccionado ? '#1a1a0e' : '#111',
+                    border: `1px solid ${seleccionado ? '#c9a84c' : '#1e1e1e'}`,
+                    borderRadius: '6px', padding: '14px 18px', cursor: 'pointer',
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+                  }}>
+                    <span style={{ color: '#f5f0e8', fontSize: '14px' }}>{s.name}</span>
+                    <span style={{ color: '#c9a84c', fontSize: '13px' }}>${s.price.toLocaleString('es-CO')}</span>
                   </div>
-                ) : (
-                  <div style={{ background: '#0d0d0d', border: '1px dashed #252525', borderRadius: '6px', padding: '16px', textAlign: 'center' }}>
-                    <p style={{ fontSize: '12px', color: '#444', fontStyle: 'italic' }}>
-                      Selecciona un barbero y una fecha para ver los horarios disponibles
-                    </p>
+                )
+              })}
+            </div>
+            <button onClick={() => { if (serviciosSeleccionados.length > 0) { setError(''); setPaso(2) } else setError('Selecciona al menos un servicio.') }}
+              style={{ width: '100%', padding: '14px', background: '#c9a84c', border: 'none', borderRadius: '6px', color: '#0a0a0a', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'Georgia, serif' }}>
+              Continuar
+            </button>
+          </div>
+        )}
+
+        {/* Paso 2: Barberos */}
+        {paso === 2 && (
+          <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
+              {barberos.map(b => (
+                <div key={b.id} onClick={() => { setBarberoSeleccionado(b); setFechaSeleccionada(''); setSlotSeleccionado(null) }} style={{
+                  background: barberoSeleccionado?.id === b.id ? '#1a1a0e' : '#111',
+                  border: `1px solid ${barberoSeleccionado?.id === b.id ? '#c9a84c' : '#1e1e1e'}`,
+                  borderRadius: '6px', padding: '14px 18px', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: '14px'
+                }}>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#c9a84c22', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#c9a84c', fontWeight: 'bold' }}>
+                    {b.names?.charAt(0).toUpperCase()}
                   </div>
-                )}
+                  <span style={{ color: '#f5f0e8', fontSize: '14px' }}>{b.names}</span>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => { if (barberoSeleccionado) { setError(''); setPaso(3) } else setError('Selecciona un barbero.') }}
+              style={{ width: '100%', padding: '14px', background: '#c9a84c', border: 'none', borderRadius: '6px', color: '#0a0a0a', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'Georgia, serif' }}>
+              Continuar
+            </button>
+          </div>
+        )}
 
-                <button type="submit" style={{
-                  marginTop: '4px', padding: '13px', background: '#c9a84c', color: '#0a0a0a',
-                  border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: 'bold',
-                  letterSpacing: '1.5px', fontFamily: 'Georgia, serif', cursor: 'pointer', transition: 'background 0.2s',
-                }}
-                  onMouseEnter={e => e.target.style.background = '#d4b55c'}
-                  onMouseLeave={e => e.target.style.background = '#c9a84c'}
-                >
-                  Confirmar Cita
-                </button>
-              </form>
+        {/* Paso 3: Fecha y hora */}
+        {paso === 3 && (
+          <div>
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ color: '#888', fontSize: '12px', display: 'block', marginBottom: '8px' }}>Fecha disponible:</label>
+              <select value={fechaSeleccionada} onChange={e => { setFechaSeleccionada(e.target.value); setSlotSeleccionado(null) }} style={inp}>
+                <option value="">Selecciona una fecha</option>
+                {fechasDisponibles.map(f => (
+                  <option key={f} value={f}>{f}</option>
+                ))}
+              </select>
+            </div>
 
-            ) : (
-              /* Confirmación */
-              <div style={{ textAlign: 'center', padding: '10px 0' }}>
-                <div style={{ fontSize: '40px', color: '#c9a84c', marginBottom: '14px' }}>✓</div>
-                <h3 style={{ fontSize: '18px', fontStyle: 'italic', color: '#f5f0e8', marginBottom: '18px', letterSpacing: '0.5px' }}>¡Cita confirmada!</h3>
-                <div style={{ background: '#141414', borderRadius: '6px', padding: '16px 20px', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {[['Nombre', forma.nombre], ['Barbero', forma.barbero], ['Servicio', forma.servicio + (servicioObj ? ` — ${servicioObj.precio}` : '')], ['Fecha', forma.fecha], ['Hora', forma.hora]].map(([k, v]) => (
-                    <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
-                      <span style={{ color: '#555', fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', alignSelf: 'center' }}>{k}</span>
-                      <span style={{ color: '#f5f0e8' }}>{v}</span>
+            {fechaSeleccionada && (
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ color: '#888', fontSize: '12px', display: 'block', marginBottom: '8px' }}>Hora disponible:</label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                  {slots.map((slot, i) => (
+                    <div key={i} onClick={() => setSlotSeleccionado(slot)} style={{
+                      padding: '8px 14px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px',
+                      background: slotSeleccionado === slot ? '#c9a84c' : '#111',
+                      color: slotSeleccionado === slot ? '#0a0a0a' : '#f5f0e8',
+                      border: `1px solid ${slotSeleccionado === slot ? '#c9a84c' : '#252525'}`
+                    }}>
+                      {slot.startTime}
                     </div>
                   ))}
+                  {slots.length === 0 && !cargando && <p style={{ color: '#555', fontSize: '13px', fontStyle: 'italic' }}>No hay horarios disponibles.</p>}
                 </div>
               </div>
             )}
+
+            <button onClick={() => { if (fechaSeleccionada && slotSeleccionado) { setError(''); setPaso(4) } else setError('Selecciona fecha y hora.') }}
+              style={{ width: '100%', padding: '14px', background: '#c9a84c', border: 'none', borderRadius: '6px', color: '#0a0a0a', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'Georgia, serif' }}>
+              Continuar
+            </button>
           </div>
-        </div>
+        )}
+
+        {/* Paso 4: Confirmación */}
+        {paso === 4 && (
+          <div>
+            <div style={{ background: '#111', border: '1px solid #1e1e1e', borderTop: '2px solid #c9a84c', borderRadius: '6px', padding: '24px', marginBottom: '24px' }}>
+              <p style={{ color: '#555', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px' }}>Resumen</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#888', fontSize: '13px' }}>Barbero</span>
+                  <span style={{ color: '#f5f0e8', fontSize: '13px' }}>{barberoSeleccionado?.names}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#888', fontSize: '13px' }}>Fecha</span>
+                  <span style={{ color: '#f5f0e8', fontSize: '13px' }}>{fechaSeleccionada}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#888', fontSize: '13px' }}>Hora</span>
+                  <span style={{ color: '#f5f0e8', fontSize: '13px' }}>{slotSeleccionado?.startTime}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#888', fontSize: '13px' }}>Servicios</span>
+                  <span style={{ color: '#f5f0e8', fontSize: '13px', textAlign: 'right' }}>
+                    {servicios.filter(s => serviciosSeleccionados.includes(s.id)).map(s => s.name).join(', ')}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <button onClick={confirmarCita} disabled={cargando}
+              style={{ width: '100%', padding: '14px', background: '#c9a84c', border: 'none', borderRadius: '6px', color: '#0a0a0a', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'Georgia, serif' }}>
+              {cargando ? 'Confirmando...' : 'Confirmar cita'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
