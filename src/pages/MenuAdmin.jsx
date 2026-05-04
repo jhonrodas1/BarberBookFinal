@@ -27,6 +27,10 @@ function MenuAdmin({ navegarA, usuario, cerrarSesion, irAlInicio }) {
             <span className="ma-nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
             Gestión Barberos
           </button>
+          <button className="ma-nav-btn" onClick={() => navegarA('gestionServicios')}>
+            <span className="ma-nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+            Gestión Servicios
+          </button>
         </nav>
         <div className="ma-spacer" />
         <button className="ma-logout" onClick={cerrarSesion}>
@@ -70,6 +74,12 @@ function MenuAdmin({ navegarA, usuario, cerrarSesion, irAlInicio }) {
             <p className="ma-card-desc">Gestiona el equipo de trabajo</p>
             <span className="ma-card-arrow">→</span>
           </div>
+          <div className="ma-card" onClick={() => navegarA('gestionServicios')}>
+          <div className="ma-card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <h3 className="ma-card-title">Gestión Servicios</h3>
+            <p className="ma-card-desc">Administra los servicios ofrecidos</p>
+            <span className="ma-card-arrow">→</span>
+        </div>
         </div>
       </div>
     </div>
