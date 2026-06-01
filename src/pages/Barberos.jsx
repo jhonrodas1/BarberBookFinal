@@ -9,12 +9,8 @@ function Barberos({ navegarA, irAlInicio, origen = 'home' }) {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    apiFetch('/appointments/services')
-      .then(data => {
-        if (data.length === 0) return []
-        return apiFetch(`/appointments/services/${data[0].id}/employees`)
-      })
-      .then(data => setBarberos(data || []))
+    apiFetch('/admin/employees')
+      .then(data => setBarberos((data || []).filter(b => b.isActive)))
       .catch(() => setError('No se pudieron cargar los barberos.'))
       .finally(() => setCargando(false))
   }, [])
@@ -44,11 +40,15 @@ function Barberos({ navegarA, irAlInicio, origen = 'home' }) {
 
         <div className="bb-lista">
           {barberos.map((b, i) => (
-            <div className="bb-item" key={b.id || i}>
-              <div className="bb-avatar">{b.name?.charAt(0).toUpperCase()}</div>
+            <div className="bb-item" key={b.employeeId || i}>
+              <div className="bb-avatar">
+                {b.names?.charAt(0).toUpperCase()}
+              </div>
               <div className="bb-info">
-                <p className="bb-nombre">{b.name}</p>
-                <p className="bb-esp">{b.available ? 'Disponible' : 'No disponible'}</p>
+                <p className="bb-nombre">{b.names} {b.lastNames}</p>
+                <p className="bb-esp">
+                  {b.services?.length > 0 ? b.services.join(' · ') : 'Barbero'}
+                </p>
               </div>
             </div>
           ))}

@@ -30,7 +30,8 @@ function Login({ navegarA, iniciarSesion }) {
   iniciarSesion({
     nombre: data.names,
     correo,
-    rol
+    rol,
+    id: data.clienteId
   })
 
   if (data.passwordTemporary) {

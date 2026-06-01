@@ -39,7 +39,6 @@ function Home({ navegarA }) {
         <div className="home-hero-divider"></div>
         <div className="home-hero-btns">
           <button className="bb-btn-gold" onClick={() => navegarA('servicios')}>Servicios Ofrecidos</button>
-          <button className="bb-btn-outline" onClick={() => navegarA('barberos')}>Barberos Activos</button>
           <button className="bb-btn-outline" onClick={() => navegarA('calendarioPublico')}>Calendario</button>
         </div>
       </main>

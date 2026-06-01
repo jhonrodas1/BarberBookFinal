@@ -15,10 +15,6 @@ function MenuAdmin({ navegarA, usuario, cerrarSesion, irAlInicio }) {
             <span className="ma-nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg></span>
             Registrar Barbero
           </button>
-          <button className="ma-nav-btn" onClick={() => navegarA('calendarioAdmin')}>
-            <span className="ma-nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-            Calendario
-          </button>
           <button className="ma-nav-btn" onClick={() => navegarA('gestionUsuarios')}>
             <span className="ma-nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4"/><circle cx="17" cy="17" r="4"/><path d="M17 14v6M14 17h6"/></svg></span>
             Gestión Usuarios
@@ -30,6 +26,10 @@ function MenuAdmin({ navegarA, usuario, cerrarSesion, irAlInicio }) {
           <button className="ma-nav-btn" onClick={() => navegarA('gestionServicios')}>
             <span className="ma-nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
             Gestión Servicios
+          </button>
+          <button className="ma-nav-btn" onClick={() => navegarA('configurarJornadas')}>
+            <span className="ma-nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+            Configurar Jornadas
           </button>
         </nav>
         <div className="ma-spacer" />
@@ -56,12 +56,6 @@ function MenuAdmin({ navegarA, usuario, cerrarSesion, irAlInicio }) {
             <p className="ma-card-desc">Añade nuevos barberos al equipo</p>
             <span className="ma-card-arrow">→</span>
           </div>
-          <div className="ma-card" onClick={() => navegarA('calendarioAdmin')}>
-            <div className="ma-card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-            <h3 className="ma-card-title">Calendario</h3>
-            <p className="ma-card-desc">Vista general de todas las citas</p>
-            <span className="ma-card-arrow">→</span>
-          </div>
           <div className="ma-card" onClick={() => navegarA('gestionUsuarios')}>
             <div className="ma-card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4"/><circle cx="17" cy="17" r="4"/><path d="M17 14v6M14 17h6"/></svg></div>
             <h3 className="ma-card-title">Gestión Usuarios</h3>
@@ -75,14 +69,21 @@ function MenuAdmin({ navegarA, usuario, cerrarSesion, irAlInicio }) {
             <span className="ma-card-arrow">→</span>
           </div>
           <div className="ma-card" onClick={() => navegarA('gestionServicios')}>
-          <div className="ma-card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div className="ma-card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
             <h3 className="ma-card-title">Gestión Servicios</h3>
             <p className="ma-card-desc">Administra los servicios ofrecidos</p>
             <span className="ma-card-arrow">→</span>
-        </div>
+          </div>
+          <div className="ma-card" onClick={() => navegarA('configurarJornadas')}>
+            <div className="ma-card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <h3 className="ma-card-title">Configurar Jornadas</h3>
+            <p className="ma-card-desc">Define los horarios de cada barbero</p>
+            <span className="ma-card-arrow">→</span>
+          </div>
         </div>
       </div>
     </div>
   )
 }
+
 export default MenuAdmin

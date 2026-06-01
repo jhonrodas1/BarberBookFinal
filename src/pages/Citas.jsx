@@ -25,7 +25,7 @@ export default function Citas({ navegarA, origen = 'menuCliente' }) {
   // Paso 1: cargar servicios
   useEffect(() => {
     apiFetch('/appointments/services')
-      .then(data => setServicios(data.filter(s => s.available)))
+      .then(data => setServicios(data))
       .catch(() => setError('No se pudieron cargar los servicios.'))
   }, [])
 

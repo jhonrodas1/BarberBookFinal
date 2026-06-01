@@ -21,14 +21,18 @@ import AgendaBarbero from './pages/AgendaBarbero'
 import GestionCitasBarbero from './pages/GestionCitasBarbero'
 import CambiarContrasena from './pages/CambiarContrasena'
 import GestionServicios from './pages/GestionServicios'
+import ConfigurarJornadas from './pages/ConfigurarJornadas'
+import JornadasBarbero from './pages/JornadasBarbero'
+import EditarCliente from './pages/EditarCliente'
 
 function App() {
   const [pantalla, setPantalla] = useState('home')
   const [usuario, setUsuario] = useState(null)
   const [origen, setOrigen] = useState('home')
+  const [barberoJornada, setBarberoJornada] = useState(null)
+  const [clienteEditar, setClienteEditar] = useState(null)
 
   const navegarA = (destino) => {
-    // Guardar desde dónde salimos antes de ir a páginas compartidas
     if (['servicios', 'barberos', 'citas'].includes(destino)) {
       setOrigen(pantalla)
     }
@@ -67,16 +71,34 @@ function App() {
   if (pantalla === 'citas')         return <Citas     navegarA={navegarA} origen={origen} />
   if (pantalla === 'misCitas')      return <MisCitas  navegarA={navegarA} />
 
-  if (pantalla === 'registrarBarbero') return <RegistrarBarbero navegarA={navegarA} irAlInicio={irAlInicio} />
-  if (pantalla === 'calendarioAdmin')  return <CalendarioAdmin  navegarA={navegarA} usuario={usuario} />
-  if (pantalla === 'calendarioPublico') return <CalendarioPublico navegarA={navegarA} />
-  if (pantalla === 'gestionUsuarios')  return <GestionUsuarios  navegarA={navegarA} />
-  if (pantalla === 'gestionBarberos')  return <GestionBarberos  navegarA={navegarA} />
-  if (pantalla === 'horarioBarbero')   return <HorarioBarbero   navegarA={navegarA} usuario={usuario} />
-  if (pantalla === 'agendaBarbero')    return <AgendaBarbero    navegarA={navegarA} usuario={usuario} />
+  if (pantalla === 'registrarBarbero')    return <RegistrarBarbero    navegarA={navegarA} irAlInicio={irAlInicio} />
+  if (pantalla === 'calendarioAdmin')     return <CalendarioAdmin     navegarA={navegarA} usuario={usuario} />
+  if (pantalla === 'calendarioPublico')   return <CalendarioPublico   navegarA={navegarA} />
+  if (pantalla === 'gestionUsuarios')     return <GestionUsuarios     navegarA={navegarA} setClienteEditar={setClienteEditar} />
+  if (pantalla === 'gestionBarberos')     return <GestionBarberos     navegarA={navegarA} />
+  if (pantalla === 'horarioBarbero')      return <HorarioBarbero      navegarA={navegarA} usuario={usuario} />
+  if (pantalla === 'agendaBarbero')       return <AgendaBarbero       navegarA={navegarA} usuario={usuario} />
   if (pantalla === 'gestionCitasBarbero') return <GestionCitasBarbero navegarA={navegarA} usuario={usuario} />
-  if (pantalla === 'cambiarContrasena') return <CambiarContrasena navegarA={navegarA} usuario={usuario} iniciarSesion={iniciarSesion} />
-  if (pantalla === 'gestionServicios') return <GestionServicios navegarA={navegarA} />
+  if (pantalla === 'cambiarContrasena')   return <CambiarContrasena   navegarA={navegarA} usuario={usuario} iniciarSesion={iniciarSesion} />
+  if (pantalla === 'gestionServicios')    return <GestionServicios    navegarA={navegarA} />
+  if (pantalla === 'configurarJornadas')  return <ConfigurarJornadas  navegarA={navegarA} setBarberoJornada={setBarberoJornada} />
+  if (pantalla === 'jornadasBarbero')     return <JornadasBarbero     navegarA={navegarA} barbero={barberoJornada} />
+
+  if (pantalla === 'editarCliente') return (
+    <EditarCliente
+      usuario={usuario}
+      clienteId={usuario?.id}
+      onVolver={() => navegarA('menuCliente')}
+    />
+  )
+
+  if (pantalla === 'editarClienteAdmin') return (
+    <EditarCliente
+      usuario={usuario}
+      clienteId={clienteEditar?.clientId}
+      onVolver={() => navegarA('gestionUsuarios')}
+    />
+  )
 
   return <Home navegarA={navegarA} />
 }
