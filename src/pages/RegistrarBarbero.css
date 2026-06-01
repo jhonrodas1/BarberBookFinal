@@ -1,0 +1,31 @@
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Georgia', serif;
+}
+
+.input-group input {
+    width: 60%;
+    padding: 8px;
+    border: 1px solid #800020;
+}
+
+.btn-registrar {
+    background-color: #800020;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px #ccc;
+    margin-top: 20px;
+}
+
+.btn-registrar:active {
+    box-shadow: none;
+    transform: translateY(2px);
+}
+/* ── luxury overrides ── */
+/* back-btn removed */
+.rb-page, .rb-wrapper { background: #0a0a0a !important; }

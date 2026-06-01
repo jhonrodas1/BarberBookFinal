@@ -1,0 +1,229 @@
+/* ============================================
+   MENU BARBERO — LUXURY BARBER THEME
+   Negro · Dorado (#c9a84c) · Blanco crema
+   ============================================ */
+
+.mb-container {
+  display: flex;
+  min-height: 100vh;
+  background: #0a0a0a;
+  font-family: 'Georgia', serif;
+}
+
+/* SIDEBAR */
+.mb-sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: #111;
+  border-right: 1px solid #c9a84c25;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0;
+  position: sticky;
+  top: 0;
+}
+
+.mb-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 24px 20px;
+  cursor: pointer;
+}
+.mb-brand-scissors {
+  font-size: 22px;
+  color: #c9a84c;
+  transform: scaleX(-1);
+  display: inline-block;
+}
+.mb-brand-name {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  color: #c9a84c;
+  margin: 0;
+}
+
+.mb-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c9a84c40, transparent);
+  margin: 0 20px 24px;
+}
+
+/* NAV */
+.mb-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 16px;
+}
+
+.mb-nav-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #555;
+  padding: 0 10px;
+  margin: 0 0 8px;
+}
+
+.mb-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  padding: 11px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.mb-nav-btn:hover {
+  background: #1a1a1a;
+  color: #f5f0e8;
+}
+.mb-nav-icon {
+  width: 20px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.mb-nav-btn:hover .mb-nav-icon { opacity: 1; }
+
+
+.mb-spacer { flex: 1; }
+
+.mb-logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 16px;
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  color: #555;
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mb-logout:hover {
+  border-color: #666;
+  color: #888;
+}
+
+/* MAIN PANEL */
+.mb-main {
+  flex: 1;
+  background: #0d0d0d;
+  display: flex;
+  flex-direction: column;
+}
+
+.mb-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 40px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.mb-topbar-left {}
+.mb-welcome {
+  font-size: 22px;
+  color: #f5f0e8;
+  margin: 0 0 4px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+.mb-date {
+  font-size: 12px;
+  color: #555;
+  text-transform: capitalize;
+  font-style: italic;
+  margin: 0;
+}
+
+.mb-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: 1px solid #c9a84c40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c9a84c;
+}
+
+/* CARDS */
+.mb-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  max-width: 900px;
+}
+
+.mb-card {
+  background: #141414;
+  border: 1px solid #222;
+  border-radius: 10px;
+  padding: 28px 24px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.mb-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #c9a84c30, transparent);
+  transition: opacity 0.2s;
+}
+.mb-card:hover {
+  border-color: #c9a84c40;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
+.mb-card:hover::before {
+  background: linear-gradient(to right, transparent, #c9a84c80, transparent);
+}
+
+
+.mb-card-icon {
+  color: #c9a84c;
+  margin-bottom: 16px;
+  opacity: 0.85;
+}
+.mb-card-title {
+  font-size: 17px;
+  color: #f5f0e8;
+  margin: 0 0 8px;
+  letter-spacing: 0.5px;
+}
+.mb-card-desc {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  margin: 0;
+}
+.mb-card-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  color: #c9a84c;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.mb-card:hover .mb-card-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}

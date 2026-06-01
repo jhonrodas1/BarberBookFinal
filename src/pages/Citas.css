@@ -1,0 +1,36 @@
+/* ════ AGENDAR CITAS ════ */
+.citas-layout { display: flex; min-height: 100vh; background: #0a0a0a; font-family: 'Georgia', serif; }
+.citas-izq { width: 240px; background: #111; border-right: 1px solid #c9a84c22; padding: 28px 20px; display: flex; flex-direction: column; gap: 16px; }
+.citas-logo { font-size: 16px; font-weight: bold; letter-spacing: 4px; color: #c9a84c; cursor: pointer; }
+.citas-btn-volver { background: transparent; border: 1.5px solid #c9a84c; color: #c9a84c; border-radius: 999px; padding: 7px 14px 7px 10px; font-family: 'Georgia', serif; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+.citas-btn-volver:hover { background: #c9a84c1a; }
+.citas-back-icon { width: 20px; height: 20px; border: 1.5px solid #c9a84c; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+.citas-der { flex: 1; display: flex; justify-content: center; padding: 40px 24px; background: #0d0d0d; }
+.citas-card { background: #111; border: 1px solid #c9a84c28; border-top: 2px solid #c9a84c; border-radius: 8px; padding: 36px; width: 100%; max-width: 420px; height: fit-content; }
+.citas-titulo { text-align: center; margin-bottom: 6px; font-size: 22px; font-style: italic; color: #f5f0e8; }
+.citas-ornament { text-align: center; color: #c9a84c; font-size: 13px; letter-spacing: 6px; opacity: 0.6; margin-bottom: 24px; }
+
+.citas-form { display: flex; flex-direction: column; gap: 14px; }
+.citas-form label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #666; display: block; margin-bottom: 4px; }
+.citas-form input, .citas-form select {
+  width: 100%; padding: 10px 13px; background: #0d0d0d; border: 1px solid #252525;
+  border-radius: 4px; color: #f5f0e8; font-family: 'Georgia', serif; font-size: 13px; outline: none; transition: border-color 0.2s;
+}
+.citas-form input:focus, .citas-form select:focus { border-color: #c9a84c55; }
+.citas-form select option { background: #111; }
+
+.citas-btn-reservar { margin-top: 6px; padding: 13px; background: #c9a84c; color: #0a0a0a; border: none; border-radius: 4px; font-family: 'Georgia', serif; font-size: 14px; font-weight: bold; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; width: 100%; }
+.citas-btn-reservar:hover { background: #d4b55c; }
+
+.citas-horario { border: 1px solid #1e1e1e; border-radius: 6px; padding: 14px; background: #0f0f0f; }
+.citas-horario label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #666; display: block; margin-bottom: 10px; }
+.citas-grid-horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.hora-slot { padding: 9px 4px; border-radius: 4px; text-align: center; font-family: 'Georgia', serif; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+.hora-libre { background: #0d2a1a; border: 1px solid #2d6a4f; color: #5cb85c; }
+.hora-libre:hover { background: #133d26; }
+.hora-ocupada { background: #111; border: 1px solid #1e1e1e; color: #333; cursor: not-allowed; }
+.hora-seleccionada { background: #c9a84c !important; border-color: #c9a84c !important; color: #0a0a0a !important; font-weight: bold; }
+
+.citas-confirmacion { text-align: center; }
+.citas-check { font-size: 38px; color: #c9a84c; margin-bottom: 10px; }
