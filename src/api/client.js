@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || '/api'
+const BASE = import.meta.env.VITE_API_URL ||'https://barbershop-mh6w.onrender.com/api'
 
 export async function apiFetch(ruta, opciones = {}) {
   const token = localStorage.getItem('token')
